@@ -1,10 +1,10 @@
 <template>
     <div>
-    <img
-      className="loader"
-      src="https://www.flaticon.com/svg/static/icons/svg/248/248958.svg"
-      alt="loading"
-    /> 
+        <img
+        class="loader"
+        src="https://www.flaticon.com/svg/static/icons/svg/248/248958.svg"
+        alt="loading"
+        /> 
     </div>
 </template>
 
@@ -25,7 +25,7 @@
     }
 
     .loader {
-        width: 40%;
+        width: 30px;
         animation: rotate 1.5s linear infinite;
     }
 </style>

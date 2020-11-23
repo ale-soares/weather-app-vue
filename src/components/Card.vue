@@ -1,13 +1,21 @@
 <template>
     <div class="card">
-        <img class="image" src="" alt="temperature icon">
-        <p class="temperature">dasuidh</p>
+        <img class="image" v-bind:src="`http://openweathermap.org/img/wn/${icon}@2x.png`" alt="temperature icon">
+        <p class="temperature">{{temperature}}</p>
     </div>
 </template>
 
 <script>
     export default {
         name: 'Card',
+        props: {
+            temperature: {
+                type: Number
+            },
+            icon: {
+                type: String
+            },
+        },
     }
 </script>
 
