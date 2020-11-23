@@ -1,20 +1,23 @@
 <template>
-  <div id="app" @data="getWeatherData">
+  <div id="app">
     <h1>{{title}}</h1>
-    <Form />
-    <Card />
+    <Form @fetchData="getWeather" />
+    <Loader v-if="loading" />
+    <Card v-bind:temperature="temperature" v-bind:icon="icon" v-else-if="!loading && showCard" />
   </div>
 </template>
 
 <script>
 import Card from './components/Card'
 import Form from './components/Form'
+import Loader from './components/Loader'
 
 export default {
   name: 'App',
   components: {
     Card,
     Form,
+    Loader,
   },
   data() {
     return {
@@ -23,13 +26,28 @@ export default {
       icon: '',
       showCard: false,
       loading: false,
+      weatherData: {}
     }
   },
   methods: {
-    getWeatherData() {
-      console.log("app data", this.weatherData)
-    }
-  },
+        async getWeather(city) {
+            try {
+                this.loading = true;
+                const response = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=ce7201d8348f6361c51c87e0ea6496d4`
+                );
+                this.weatherData = await response.json();
+                this.temperature = `${Math.round(this.weatherData.main.temp)}°C`;
+                this.icon = this.weatherData.weather[0].icon;
+                this.showCard = true;
+            } catch (err) {
+                console.log(err);
+                this.showCard = false;
+            } finally {
+                this.loading = false;
+            } 
+        }
+    },
 }
 </script>
 
@@ -55,10 +73,5 @@ export default {
 
   #app h1 {
     color: darkcyan;
-  }
-
-  .input-container{
-    display: flex;
-    margin-top: 20px;
   }
 </style>

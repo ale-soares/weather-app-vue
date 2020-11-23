@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="getWeather">
+    <form class="form" @submit.prevent="fetchData">
         <input class="input" type="text" placeholder="City name here" v-model="city">
         <button class="submit">Submit</button>
     </form>
@@ -15,25 +15,19 @@ export default {
         }
     },
     methods: {
-        async getWeather() {
-            try {
-                this.showLoading = true;
-                const response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=ce7201d8348f6361c51c87e0ea6496d4`
-                );
-                const weatherData = await response.json();
-                this.$emit('data', weatherData)
-            } catch (err) {
-                console.log(err);
-            } finally {
-                this.showLoading = false;
-            } 
+        fetchData() {
+            this.$emit("fetchData", this.city)
         }
     },
+    
 }
 </script>
 
 <style scoped>
+    .form {
+        margin-top: 20px;
+    }
+    
     .input {
         background-color: rgb(116, 226, 208);
         border: none;
