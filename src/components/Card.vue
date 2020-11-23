@@ -29,7 +29,7 @@
     }
 
     .image {
-        width: 200px;
+        width: 100px;
     }
 
     .temperature {
